@@ -3,7 +3,7 @@ class Character extends MoveableObject{
     height = 250;
     width = 140;
     y = 115;
-    IMAGES_WALKING = [
+    IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
         'img/2_character_pepe/1_idle/idle/I-3.png',
@@ -26,6 +26,15 @@ class Character extends MoveableObject{
         'img/2_character_pepe/1_idle/long_idle/I-20.png',
     ];
 
+    IMAGES_WALKING = [
+        'img/2_character_pepe/2_walk/W-21.png',
+        'img/2_character_pepe/2_walk/W-22.png',
+        'img/2_character_pepe/2_walk/W-23.png',
+        'img/2_character_pepe/2_walk/W-24.png',
+        'img/2_character_pepe/2_walk/W-25.png',
+        'img/2_character_pepe/2_walk/W-26.png',
+    ];
+   
 
     constructor() {
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png')
@@ -35,10 +44,12 @@ class Character extends MoveableObject{
 
     animate() {
         setInterval(() =>{
-            let i = this.currentImage % this.IMAGES_WALKING.length;
-            let path = this.IMAGES_WALKING[i];
-            this.img = this.imageCache[path];
-            this.currentImage++;
+            if(world.keyboard.RIGHT) {
+                let i = this.currentImage % this.IMAGES_WALKING.length;
+                let path = this.IMAGES_WALKING[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
+            }
         }, 100);
     }
     
