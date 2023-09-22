@@ -1,8 +1,9 @@
 class Character extends MoveableObject{
     
     height = 250;
-    width = 140;
+    width = 120;
     y = 115;
+    speed = 5;
     IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -43,8 +44,24 @@ class Character extends MoveableObject{
     }
 
     animate() {
+
         setInterval(() =>{
-            if(world.keyboard.RIGHT) {
+            if(world.keyboard.RIGHT && this.x < world.level.level_end_x) {
+                this.x += this.speed;
+                this.otherDirection = false;
+            }
+            if(world.keyboard.LEFT && this.x > 150) {
+                this.x -= this.speed;
+                this.otherDirection = true;
+            }
+            world.camera_x = -this.x + 120;
+        }, 1000 / 60);
+
+        setInterval(() =>{
+            if(world.keyboard.RIGHT || world.keyboard.LEFT) {
+                
+
+                //Walk Animation
                 let i = this.currentImage % this.IMAGES_WALKING.length;
                 let path = this.IMAGES_WALKING[i];
                 this.img = this.imageCache[path];
