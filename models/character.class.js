@@ -2,8 +2,9 @@ class Character extends MoveableObject{
     
     height = 250;
     width = 120;
-    y = 0;
+    y = 115;
     speed = 5;
+    standingTime = 0;
     IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',
@@ -15,6 +16,10 @@ class Character extends MoveableObject{
         'img/2_character_pepe/1_idle/idle/I-8.png',
         'img/2_character_pepe/1_idle/idle/I-9.png',
         'img/2_character_pepe/1_idle/idle/I-10.png',
+        
+    ];
+
+    IMAGES_SLEEPING = [
         'img/2_character_pepe/1_idle/long_idle/I-11.png',
         'img/2_character_pepe/1_idle/long_idle/I-12.png',
         'img/2_character_pepe/1_idle/long_idle/I-13.png',
@@ -68,6 +73,8 @@ class Character extends MoveableObject{
 
     constructor() {
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png')
+        this.loadImages(this.IMAGES_STANDING);
+        this.loadImages(this.IMAGES_SLEEPING);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_JUMPING);
         this.loadImages(this.IMAGES_DEAD);
@@ -98,18 +105,32 @@ class Character extends MoveableObject{
 
         setInterval(() =>{
 
+            
+
             if (this.isDead()) {
                 this.playAnnimation(this.IMAGES_DEAD);
             }
             else if (this.isHurt()) {
                 this.playAnnimation(this.IMAGES_HURT);
+                this.standingTime = 0;
             }
             else if (this.isAboveGround()) {
                 this.playAnnimation(this.IMAGES_JUMPING);
+                this.standingTime = 0;
             } else{
                 if(world.keyboard.RIGHT || world.keyboard.LEFT) {              
                     this.playAnnimation(this.IMAGES_WALKING);
+                    this.standingTime = 0;
                 }
+                else {
+                    this.playAnnimation(this.IMAGES_STANDING);
+                    this.standingTime += 150;
+                    if (this.standingTime >=6000) {
+                        this.playAnnimation(this.IMAGES_SLEEPING);
+                    }
+                }
+                    
+                
             }
         }, 100);
     }

@@ -1,9 +1,66 @@
+@font-face {
+    font-family: 'zabras';
+    src: url('fonts/zabars.ttf') format('truetype');
+}
+
 body {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    background-image: url('img/9_intro_outro_screens/backgroundImg.jpg');
+    background-repeat: 0;
+    background-size: cover;
+    height: 100vh;
+    margin: 0;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+   
+}
+h1 {
+    font-size: 84px;
+    letter-spacing: 5px;
+    text-shadow: 2px 6px 8px rgba(0, 0, 0, 0.2);
+    margin-block-end: 0;
 }
 
 canvas {
     background-color: black;
+    margin-bottom: 100px;
+    border-radius: 20px;
+    
 }
+
+.d-none {
+    display: none !important;
+}
+
+.start {
+    height: 420px;
+    width: 720px;
+    background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
+    background-repeat: 0;
+    background-size: cover;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+button {
+    border-radius: 14px;
+    width: 121px;
+    height: 38px;
+    margin-top: 50px;
+    font-size: 30px;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+    background-color: #ffb900;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 6px;
+}
+
+button:hover {
+    scale: 1.1;
+    cursor: pointer;
+}
+

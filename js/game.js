@@ -3,12 +3,16 @@ let world;
 let keyboard = new Keyboard();
 
 function init() {
-    canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard); 
     
 
-    
-    console.log("My character is ", world.character);
+}
+
+function startGame() {
+    document.getElementById("startScreen").classList.add("d-none");
+    document.getElementById("canvas").classList.remove("d-none");
+    initLevel();
+    canvas = document.getElementById("canvas");
+    world = new World(canvas, keyboard);
 }
 
 
@@ -56,4 +60,7 @@ window.addEventListener("keyup", (e) => {
     }
 
 });
+
+
+
 
