@@ -5,6 +5,8 @@ class World {
     ctx;
     keyboard;
     camera_x = -0;
+    statusBar = new StatusBar();
+    throableObjects = [];
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -12,10 +14,35 @@ class World {
         this.keyboard = keyboard
         this.draw();
         this.setWorld();
+        this.run();
     }
 
     setWorld() {
         this.character.World = this;
+    }
+
+    run() {
+        setInterval(() => {
+
+            this.checkCollision();
+            this.checkThrowObjects();
+        }, 200);
+    }
+
+    checkThrowObjects() {
+        if (this.keyboard.D) {
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100)
+            this.throableObjects.push(bottle);
+        }
+    }
+
+    checkCollision() {
+        this.level.enemies.forEach(enemy => {
+            if(this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            };
+        });
     }
     
     draw() {
@@ -24,18 +51,19 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level. backgroundObjects);
+
+        this.ctx.translate(-this.camera_x, 0); //Back
+        /* ---------- Space for fixed objects-----------*/
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); //Forwards
+
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.throableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
-        
-        
-        
-
-
-
-
+     
         //draw wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function(){
