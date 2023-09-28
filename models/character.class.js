@@ -109,6 +109,11 @@ class Character extends MoveableObject{
 
             if (this.isDead()) {
                 this.playAnnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    this.clearAllIntervals();
+                    gameOver();
+                }, 1500);
+                
             }
             else if (this.isHurt()) {
                 this.playAnnimation(this.IMAGES_HURT);

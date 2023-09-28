@@ -5,7 +5,9 @@ class MoveableObject extends DrawableObject {
     speedY = 0.5;
     acceleration = 1.7 ;
     energy = 100;
+    energyFinalBoss = 100;
     lastHit = 0;
+    lastHitFinalBoss = 0;
     notMoving = 0;
 
 
@@ -23,19 +25,18 @@ class MoveableObject extends DrawableObject {
             return true;
         }
         else{
-            return this.y < 115;
+            return this.y <= 100;
         }
         
     }
-
-    
+   
 
     isColliding(mo) {
         return  this.x + this.width > mo.x &&
                 this.y + this.height > mo.y &&
-                this.x < mo.x &&
+                this.x < mo.x + mo.width &&
                 this.y < mo.y + mo.height;
-    }
+    } 
 
     hit() {
         this.energy -= 2;    
@@ -55,6 +56,26 @@ class MoveableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
+    }
+
+    hitFinalBoss() {
+        this.energyFinalBoss -= 20;    
+        if (this.energyFinalBoss < 0) {
+            this.energyFinalBoss = 0;
+        }
+        else {
+            this.lastHitFinalBoss = new Date().getTime();
+        }
+    }
+
+    isHurtFinalBoss() {
+        let timepassed = new Date().getTime() - this.lastHitFinalBoss;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+    }
+
+    isDeadFinalBoss() {
+        return this.energyFinalBoss == 0;
     }
     
     
@@ -81,6 +102,6 @@ class MoveableObject extends DrawableObject {
     }
 
     jump() {
-        this.speedY = 20;
+        this.speedY = 25;
     }
 }

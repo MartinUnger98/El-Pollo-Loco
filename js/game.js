@@ -2,17 +2,25 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-function init() {
+async function startGame() {
+    document.getElementById("startScreen").classList.add("d-none");
+    await game();
     
-
+    document.getElementById("canvas").classList.remove("d-none");
 }
 
-function startGame() {
-    document.getElementById("startScreen").classList.add("d-none");
-    document.getElementById("canvas").classList.remove("d-none");
+async function game() {
     initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
+}
+
+function gameOver() {
+    document.getElementById("gameOver").classList.remove("d-none");
+}
+
+function restartGame() {
+    window.location.reload();
 }
 
 

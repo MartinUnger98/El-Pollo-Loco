@@ -8,7 +8,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('img/9_intro_outro_screens/backgroundImg.jpg');
+    background-image: url('img/10_extras/backgroundImg.jpg');
     background-repeat: 0;
     background-size: cover;
     height: 100vh;
@@ -41,6 +41,21 @@ canvas {
     background-repeat: 0;
     background-size: cover;
     border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 100px;
+}
+
+.gameOver {
+    height: 420px;
+    width: 720px;
+    background-image: url('img/9_intro_outro_screens/game_over/game over!.png');
+    background-repeat: 0;
+    background-size: cover;
+    border-radius: 20px;
+    position: absolute;
+    top: calc(50vh - (420px / 2) + (84px / 4));
+    left: auto;
     display: flex;
     justify-content: center;
 }

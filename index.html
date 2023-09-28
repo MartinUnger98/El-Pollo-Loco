@@ -22,10 +22,18 @@
     <script src="./levels/level1.js"></script>    
     <script src="./js/game.js"></script>
 </head>
-<body onload="init()">
+<body>
     <h1>El Pollo loco</h1>
     <div class="start" id="startScreen">
         <button onclick="startGame()">START</button>
+    </div>
+    <div class="miniBtns">
+        <img src="" alt="">
+        <img src="" alt="">
+        <img src="" alt="">
+    </div>
+    <div class="gameOver d-none" id="gameOver">
+        <button onclick="restartGame()">RESTART</button>
     </div>
     <canvas class="d-none" id="canvas" width="720" height="420"></canvas>
     
