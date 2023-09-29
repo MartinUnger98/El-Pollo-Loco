@@ -10,6 +10,7 @@ class MiniChicken extends MoveableObject{
     IMAGES_DEAD = [
         'img/3_enemies_chicken/chicken_small/2_dead/dead.png'
     ];
+    
 
     constructor() {
         super().loadImage('img/3_enemies_chicken/chicken_small/1_walk/1_w.png')
@@ -32,6 +33,10 @@ class MiniChicken extends MoveableObject{
             }
             else {
                 this.loadImage(this.IMAGES_DEAD);
+                if (this.musicCounter === 0) {
+                    this.chickenDead_music.play();
+                }
+                this.musicCounter++;
                 setTimeout(() => {
                     this.IMAGES_DEAD = [];
                 }, 500);

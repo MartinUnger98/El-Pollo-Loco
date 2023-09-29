@@ -9,6 +9,14 @@ class DrawableObject {
     imageCache = {};
     currentImage = 0;
 
+    background_music = new Audio('audio/game_music.mp3');
+    chickenDead_music = new Audio('audio/chicken.mp3');
+    musicCounter = 0;
+
+    playBackgroundMusic() {
+        this.background_music.play();
+    }
+    
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;

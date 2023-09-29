@@ -28,10 +28,14 @@ class Chicken extends MoveableObject{
 
         setInterval(() =>{
             if (!this.chickenIsDead) {
-                this.playAnnimation(this.IMAGES_WALKING);    
+                this.playAnnimation(this.IMAGES_WALKING);   
             }
             else {
                 this.loadImage(this.IMAGES_DEAD);
+                if (this.musicCounter === 0) {
+                    this.chickenDead_music.play();
+                }
+                this.musicCounter++;
                 setTimeout(() => {
                     this.IMAGES_DEAD = [];
                 }, 500);
