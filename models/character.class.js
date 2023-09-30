@@ -70,6 +70,9 @@ class Character extends MoveableObject{
     ];
 
    walking_sound = new Audio('audio/running.mp3')
+   hurt_sound = new Audio('audio/hurt.mp3');
+   dead_sound = new Audio('audio/game_over.mp3');
+   jumping_sound = new Audio('audio/jump.mp3');
 
     constructor() {
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png')
@@ -103,14 +106,12 @@ class Character extends MoveableObject{
             world.camera_x = -this.x + 120;
         }, 1000 / 60);
 
-        setInterval(() =>{
-
-            
-
+        setInterval(() =>{    
             if (this.isDead()) {
                 this.playAnnimation(this.IMAGES_DEAD);
                 setTimeout(() => {
                     this.clearAllIntervals();
+                    this.dead_sound.play();
                     gameOver();
                 }, 1500);
                 
@@ -118,9 +119,11 @@ class Character extends MoveableObject{
             else if (this.isHurt()) {
                 this.playAnnimation(this.IMAGES_HURT);
                 this.standingTime = 0;
+                this.hurt_sound.play();
             }
             else if (this.isAboveGround()) {
                 this.playAnnimation(this.IMAGES_JUMPING);
+                this.jumping_sound.play();
                 this.standingTime = 0;
             } else{
                 if(world.keyboard.RIGHT || world.keyboard.LEFT) {              
@@ -138,6 +141,5 @@ class Character extends MoveableObject{
                 
             }
         }, 100);
-    }
-    
+    }    
 }
