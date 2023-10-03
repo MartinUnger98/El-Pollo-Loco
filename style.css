@@ -54,7 +54,7 @@ canvas {
     background-size: cover;
     border-radius: 20px;
     position: absolute;
-    top: calc(50vh - (420px / 2) + (84px / 4));
+    top: calc(50vh - (420px / 2) + (108px / 4));
     left: auto;
     display: flex;
     justify-content: center;

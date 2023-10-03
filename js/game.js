@@ -2,17 +2,23 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-async function startGame() {
+function startGame() {
     document.getElementById("startScreen").classList.add("d-none");
-    await game();
+    game();
     
-    document.getElementById("canvas").classList.remove("d-none");
+    
 }
 
-async function game() {
+function game() {
     initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
+
+    showGame();
+}
+
+function showGame() {
+    document.getElementById("canvas").classList.remove("d-none");
 }
 
 function gameOver() {

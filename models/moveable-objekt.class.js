@@ -9,6 +9,7 @@ class MoveableObject extends DrawableObject {
     lastHit = 0;
     lastHitFinalBoss = 0;
     notMoving = 0;
+    
 
 
     applyGravity() {

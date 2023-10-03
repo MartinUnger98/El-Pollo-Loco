@@ -46,6 +46,7 @@ class FinalBoss extends MoveableObject {
     ];
 
     hadFirstContact = false;
+    win_sound = new Audio('audio/win.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
@@ -62,8 +63,21 @@ class FinalBoss extends MoveableObject {
     animate() {
         let i = 0
         setInterval(() => {
+
+            if (this.isDeadFinalBoss()) {
+                this.playAnnimation(this.IMAGES_DEAD);
+                setTimeout(() => {
+                    this.clearAllIntervals();
+                    this.win_sound.play();
+                    gameOver();
+                }, 1500);
+            }
+
+            else if (this.isHurtFinalBoss()) {
+                this.playAnnimation(this.IMAGES_HURT);
+            }
             
-            if (i < 15) {
+            else if (i < 15) {
                 this.playAnnimation(this.IMAGES_ALERT);        
             }
             else if (i < 30) {
@@ -81,7 +95,7 @@ class FinalBoss extends MoveableObject {
         }, 200);
         
         setInterval(() => {
-            if (this.hadFirstContact && i > 30) {
+            if (this.hadFirstContact && i > 30 && !this.isDeadFinalBoss() && !this.isHurtFinalBoss()) {
                 this.x -= this.speed;    
             }        
         }, 1000 / 60);

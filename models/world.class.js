@@ -7,6 +7,7 @@ class World {
     camera_x = -0;
     statusBar = new StatusBar();
     throwableObjects = [];
+    
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext('2d');
@@ -32,30 +33,71 @@ class World {
         if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 50)
             this.throwableObjects.push(bottle);
+            this.character.standingTime = 0;
         }
     }
 
     checkCollision() {
+        this.checkCollisionJumpOnEnemy();
+        this.checkCollisionCharacterEnemy();
+        this.checkCollisionThrowableObject();
+        this.checkCollisionCharacterCoin();
+        this.checkCollisionCharacterBottle();
+    }
+    checkCollisionJumpOnEnemy() {
         this.level.enemies.forEach(enemy => {
             if(this.character.isColliding(enemy) && this.character.isAboveGround()) {
                 enemy.chickenIsDead = true;
             }
-            else if(this.character.isColliding(enemy) && !enemy.chickenIsDead) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            };
-            
         });
     }
 
-    th
+    checkCollisionCharacterEnemy() {
+        this.level.enemies.forEach(enemy => {
+            if(this.character.isColliding(enemy) && !enemy.chickenIsDead) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkCollisionThrowableObject() {
+        this.throwableObjects.forEach((bottle, index) => {
+            this.checkCollisionBottleFinalboss(bottle, index);
+        })
+    }
+
+    checkCollisionBottleFinalboss(bottle, index) {
+        if (this.level.finalboss.isColliding(bottle)) {
+            this.level.finalboss.hitFinalBoss();
+            setTimeout(() => {
+                this.throwableObjects.splice(index, 1)
+            }, 50);
+        }
+    }
+
+    checkCollisionCharacterCoin() {
+        this.level.coins.forEach(coin => {
+            if (this.character.isColliding(coin)) {
+                coin.collected = true;
+            }
+        })
+    }
+
+    checkCollisionCharacterBottle() {
+        this.level.bottles.forEach(bottle => {
+            if (this.character.isColliding(bottle)) {
+                bottle.collected = true;
+            }
+        })
+    }
     
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level. backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects);
 
         this.ctx.translate(-this.camera_x, 0); //Back
         /* ---------- Space for fixed objects-----------*/
@@ -63,8 +105,11 @@ class World {
         this.ctx.translate(this.camera_x, 0); //Forwards
 
         this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.enemies);
+        this.addToMap(this.level.finalboss);
         this.addObjectsToMap(this.throwableObjects);
 
         this.ctx.translate(-this.camera_x, 0);
