@@ -62,6 +62,7 @@ class World {
         this.checkCollisionThrowableObject();
         this.checkCollisionCharacterCoin();
         this.checkCollisionCharacterBottle();
+        this.checkCollisionCharacterFinalboss();
     }
     checkCollisionJumpOnEnemy() {
         this.level.enemies.forEach(enemy => {
@@ -113,6 +114,14 @@ class World {
                 this.bottleStatusBar.setPercentage(this.bottleCounter);
             }
         })
+    }
+
+    checkCollisionCharacterFinalboss() {
+        if (this.character.isColliding(this.level.finalboss)) {
+            this.level.finalboss.clearAllIntervals();
+            this.level.finalboss.win_sound.play();
+            gameOver();
+        }
     }
     
     checkCollected(array) {
