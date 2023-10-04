@@ -54,7 +54,7 @@ canvas {
     background-size: cover;
     border-radius: 20px;
     position: absolute;
-    top: calc(50vh - (420px / 2) + (108px / 4));
+    top: calc(50vh - (420px / 2) + (86px / 4));
     left: auto;
     display: flex;
     justify-content: center;
@@ -79,3 +79,70 @@ button:hover {
     cursor: pointer;
 }
 
+.miniBtns {
+    position: absolute;
+    top: calc(50vh - 180px);
+    left: calc(50vw + 230px);
+    display: flex;
+    gap: 8px;
+}
+
+.miniBtns img {
+    width: 30px;
+    height: 30px;
+}
+
+.miniBtns img:hover {
+    scale: 1.2;
+    cursor: pointer;
+}
+
+.loading {
+    height: 420px;
+    width: 720px;
+    border-radius: 20px;
+    position: absolute;
+    top: calc(50vh - (424px / 2) + (86px / 4));
+    left: auto;
+    display: flex;
+    justify-content: center;    
+    background-color: #efe07c;
+    opacity: 1;
+    background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #efe07c 19px ), repeating-linear-gradient( #f1a80a, #f4a481 );
+    flex-direction: column;
+    align-items: center;
+    font-size: 84px;
+}
+
+.loading p{
+    margin: 0;
+}
+
+.lds-dual-ring {
+    display: inline-block;
+    width: 130px;
+    height: 130px;
+  }
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 100px;
+    height: 100px;
+    margin: 8px;
+    border-radius: 50%;
+    border: 10px solid rgb(53, 53, 53);
+    border-color: rgb(53, 53, 53) transparent rgb(53, 53, 53) transparent;
+    animation: lds-dual-ring 1.5s linear infinite;
+  }
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+
+  
+  

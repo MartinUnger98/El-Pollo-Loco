@@ -1,8 +1,10 @@
 let canvas;
 let world;
 let keyboard = new Keyboard();
+let isLoading = false;
 
-function startGame() {
+
+async function startGame() {
     document.getElementById("startScreen").classList.add("d-none");
     game();
     
