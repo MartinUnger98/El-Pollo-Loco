@@ -15,7 +15,7 @@ class BossStatusBar extends DrawableObject {
         this.loadImages(this.IMAGES);
         this.setPercentage(100);
         this.x = 500;
-        this.y = -10;
+        this.y = 30;
         this.width = 200;
         this.height = 45;
     }
