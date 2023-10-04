@@ -5,8 +5,6 @@ class Character extends MoveableObject{
     y = 115;
     speed = 5;
     standingTime = 0;
-    coinCounter = 0;
-    bottleCounter = 0;
     IMAGES_STANDING = [
         'img/2_character_pepe/1_idle/idle/I-1.png',
         'img/2_character_pepe/1_idle/idle/I-2.png',

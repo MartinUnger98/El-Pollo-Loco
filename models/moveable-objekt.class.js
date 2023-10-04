@@ -9,6 +9,7 @@ class MoveableObject extends DrawableObject {
     lastHit = 0;
     lastHitFinalBoss = 0;
     notMoving = 0;
+   
     
 
 
@@ -40,7 +41,7 @@ class MoveableObject extends DrawableObject {
     } 
 
     hit() {
-        this.energy -= 2;    
+        this.energy -= 5;    
         if (this.energy < 0) {
             this.energy = 0;
         }

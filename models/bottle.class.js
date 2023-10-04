@@ -2,6 +2,7 @@ class Bottle extends MoveableObject {
     collected = false;
     width = 80;
     height = 80;
+    isThrown = false;
     IMAGES = [
         'img/6_salsa_bottle/2_salsa_bottle_on_ground.png'
     ];
@@ -9,7 +10,7 @@ class Bottle extends MoveableObject {
     constructor() {
         super().loadImage('img/6_salsa_bottle/2_salsa_bottle_on_ground.png');
         this.loadImages(this.IMAGES);
-        this.x = 50 + Math.random() * 1500;
+        this.x = 400 + Math.random() * 1500;
         this.animate();
     }
 
@@ -17,7 +18,7 @@ class Bottle extends MoveableObject {
     animate() {
         setInterval(() => {
             if (!this.collected) {
-                this.playAnnimation(this.IMAGES);    
+                this.loadImage(this.IMAGES);    
             }
             else{
                 this.IMAGES = [];

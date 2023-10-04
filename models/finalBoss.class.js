@@ -88,7 +88,7 @@ class FinalBoss extends MoveableObject {
             }
             i++;
 
-            if (world.character.x > 1250 && !this.hadFirstContact) {
+            if (world.character.x > 1425 && !this.hadFirstContact) {
                 i = 0;
                 this.hadFirstContact = true;
             }

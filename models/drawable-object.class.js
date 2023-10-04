@@ -12,6 +12,7 @@ class DrawableObject {
     background_music = new Audio('audio/game_music.mp3');
     chickenDead_music = new Audio('audio/chicken.mp3');
     musicCounter = 0;
+    
 
     playBackgroundMusic() {
         this.background_music.play();
@@ -24,16 +25,6 @@ class DrawableObject {
 
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawBorder(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof FinalBoss || this instanceof MiniChicken || this instanceof ThrowableObject) {
-            ctx.beginPath();
-        ctx.lineWidth = '5';
-        ctx.strokeStyle = 'blue';
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-        };
     }
     
     loadImages(arr) {

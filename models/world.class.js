@@ -1,12 +1,16 @@
 class World {
     character = new Character();
     level = level1;
-    canvas
+    canvas;
     ctx;
     keyboard;
     camera_x = -0;
-    statusBar = new StatusBar();
+    lifeStatusBar = new LifeStatusBar();
+    coinStatusBar = new CoinStatusBar();
+    bottleStatusBar = new BottleStatusBar();
+    bossStatusBar = new BossStatusBar();
     throwableObjects = [];
+    bottleCounter = 0;
     
 
     constructor(canvas, keyboard) {
@@ -29,12 +33,27 @@ class World {
         }, 200);
     }
 
+
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.bottleCounter > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 50)
             this.throwableObjects.push(bottle);
             this.character.standingTime = 0;
+            this.bottleIsThrown(this.level.bottles);
+            this.bottleCounter--;
+            this.bottleStatusBar.setPercentage(this.bottleCounter);
         }
+    }
+
+    
+
+    bottleIsThrown(array) {
+        for (let obj of array) {
+            if (obj.isThrown === false && obj.collected === true) {
+                obj.isThrown = true;
+                break;
+            }
+        }        
     }
 
     checkCollision() {
@@ -56,7 +75,7 @@ class World {
         this.level.enemies.forEach(enemy => {
             if(this.character.isColliding(enemy) && !enemy.chickenIsDead) {
                 this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                this.lifeStatusBar.setPercentage(this.character.energy);
             }
         });
     }
@@ -70,6 +89,7 @@ class World {
     checkCollisionBottleFinalboss(bottle, index) {
         if (this.level.finalboss.isColliding(bottle)) {
             this.level.finalboss.hitFinalBoss();
+            this.bossStatusBar.setPercentage(this.level.finalboss.energyFinalBoss);
             setTimeout(() => {
                 this.throwableObjects.splice(index, 1)
             }, 50);
@@ -80,17 +100,31 @@ class World {
         this.level.coins.forEach(coin => {
             if (this.character.isColliding(coin)) {
                 coin.collected = true;
+                this.coinStatusBar.setPercentage(this.checkCollected(this.level.coins));
             }
         })
     }
 
     checkCollisionCharacterBottle() {
         this.level.bottles.forEach(bottle => {
-            if (this.character.isColliding(bottle)) {
+            if (this.character.isColliding(bottle) && !bottle.isThrown && !bottle.collected) {
                 bottle.collected = true;
+                this.bottleCounter++;
+                this.bottleStatusBar.setPercentage(this.bottleCounter);
             }
         })
     }
+    
+    checkCollected(array) {
+        let count = 0;
+        for (let obj of array) {
+            if (obj.collected === true) {
+                count++;
+            }
+        }
+        return count;
+    }
+   
     
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -98,13 +132,18 @@ class World {
         this.ctx.translate(this.camera_x, 0);
 
         this.addObjectsToMap(this.level.backgroundObjects);
-
+        this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0); //Back
         /* ---------- Space for fixed objects-----------*/
-        this.addToMap(this.statusBar);
+        this.addToMap(this.lifeStatusBar);
+        this.addToMap(this.coinStatusBar);
+        this.addToMap(this.bottleStatusBar);
+        if (this.level.finalboss.hadFirstContact) {
+            this.addToMap(this.bossStatusBar);
+        }
         this.ctx.translate(this.camera_x, 0); //Forwards
 
-        this.addObjectsToMap(this.level.clouds);
+        
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
@@ -134,7 +173,6 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawBorder(this.ctx);
 
         if (mo.otherDirection) {
            this.flipImageBack(mo);
