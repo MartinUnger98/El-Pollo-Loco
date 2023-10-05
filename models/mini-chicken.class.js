@@ -33,7 +33,7 @@ class MiniChicken extends MoveableObject{
             else {
                 this.loadImage(this.IMAGES_DEAD);
                 if (this.musicCounter === 0) {
-                    this.chickenDead_music.play();
+                    this.playSound(this.chickenDead_music);
                 }
                 this.musicCounter++;
                 setTimeout(() => {

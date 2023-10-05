@@ -24,11 +24,11 @@ class MoveableObject extends DrawableObject {
 
     isAboveGround() {
         if (this instanceof ThrowableObject) {
-            return true;
+            return this.y <= 280;
         }
-        else{
-            return this.y <= 100;
-        }
+        else{ 
+            return this.y <= 115;
+        } 
         
     }
    
@@ -105,5 +105,6 @@ class MoveableObject extends DrawableObject {
 
     jump() {
         this.speedY = 25;
+        
     }
 }

@@ -15,6 +15,7 @@ class ThrowableObject extends MoveableObject {
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/5_bottle_splash.png',
         'img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png',
     ];
+    isColliding = false;
 
     constructor(x, y) {
         super().loadImage('img/6_salsa_bottle/salsa_bottle.png');
@@ -31,11 +32,14 @@ class ThrowableObject extends MoveableObject {
 
     throw() {
         this.speedY = 20;
-        this.applyGravity();
-        setInterval(() => {
-            this.x += 10;
-            
-        }, 25);
+        if (!this.isColliding) {
+            this.applyGravity();
+            setInterval(() => {
+                this.x += 10;
+                
+            }, 25);   
+        }        
+        
         setInterval(() => {
             this.animate();
         }, 100);
@@ -43,11 +47,12 @@ class ThrowableObject extends MoveableObject {
     }
 
     animate() {
-        if (this.isAboveGround() === false ) {
-            this.playAnnimation(this.IMAGES_SPLASH);
-        }
-        else{
+        if (this.isAboveGround() && !this.isColliding) {
             this.playAnnimation(this.IMAGES_ROATATION);  
         }
+        else {
+            this.playAnnimation(this.IMAGES_SPLASH);  
+        }
+
     }
 }

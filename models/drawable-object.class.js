@@ -11,13 +11,22 @@ class DrawableObject {
 
     background_music = new Audio('audio/game_music.mp3');
     chickenDead_music = new Audio('audio/chicken.mp3');
+    walking_sound = new Audio('audio/running.mp3')
+    hurt_sound = new Audio('audio/hurt.mp3');
+    dead_sound = new Audio('audio/game_over.mp3');
+    jumping_sound = new Audio('audio/jump.mp3');
+    
+    collectBottle_sound = new Audio('audio/bottle.mp3');
+    collectCoin_sound = new Audio('audio/coin.mp3');
+    lose_sound = new Audio('audio/game_over.mp3');
+    bottleBroke_sound = new Audio('audio/glass.mp3');
+    throw_sound = new Audio('audio/throw.mp3');
+
     musicCounter = 0;
+
     
 
-    playBackgroundMusic() {
-        this.background_music.play();
-    }
-    
+
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
@@ -38,4 +47,11 @@ class DrawableObject {
     clearAllIntervals() {
         for (let i = 1; i < 9999; i++) window.clearInterval(i);
     }
+
+    playSound(sound) {
+        if (!isMuted) {
+            sound.play();
+        }
+       }
+
 }

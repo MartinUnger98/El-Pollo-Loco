@@ -24,13 +24,32 @@ class World {
 
     setWorld() {
         this.character.World = this;
+        if (!isMuted) {
+            this.character.background_music.loop = true;
+            this.character.background_music.volume = 0.3;    
+            this.character.background_music.play();    
+        }
+        
     }
 
     run() {
         setInterval(() => {
             this.checkCollision();
             this.checkThrowObjects();
+            this.checkBackgroundMusic();
         }, 200);
+    }
+
+    checkBackgroundMusic() {
+        setInterval(() => {
+            if (isMuted) {
+                this.character.background_music.pause();
+            }
+            else {
+                this.character.background_music.play();
+            }
+        }, 25);
+
     }
 
 
@@ -38,14 +57,13 @@ class World {
         if (this.keyboard.D && this.bottleCounter > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 50)
             this.throwableObjects.push(bottle);
+            this.character.playSound(this.character.throw_sound);
             this.character.standingTime = 0;
             this.bottleIsThrown(this.level.bottles);
             this.bottleCounter--;
             this.bottleStatusBar.setPercentage(this.bottleCounter);
         }
-    }
-
-    
+    }  
 
     bottleIsThrown(array) {
         for (let obj of array) {
@@ -63,6 +81,7 @@ class World {
         this.checkCollisionCharacterCoin();
         this.checkCollisionCharacterBottle();
         this.checkCollisionCharacterFinalboss();
+        
     }
     checkCollisionJumpOnEnemy() {
         this.level.enemies.forEach(enemy => {
@@ -84,6 +103,7 @@ class World {
     checkCollisionThrowableObject() {
         this.throwableObjects.forEach((bottle, index) => {
             this.checkCollisionBottleFinalboss(bottle, index);
+            this.checkCollisionBottleGround(bottle, index);
         })
     }
 
@@ -91,6 +111,16 @@ class World {
         if (this.level.finalboss.isColliding(bottle)) {
             this.level.finalboss.hitFinalBoss();
             this.bossStatusBar.setPercentage(this.level.finalboss.energyFinalBoss);
+            bottle.isColliding = true;
+            setTimeout(() => {
+                this.throwableObjects.splice(index, 1)
+            }, 200);
+        }
+    }
+
+    checkCollisionBottleGround(bottle, index) {
+        if (!bottle.isAboveGround()) {
+            bottle.isColliding = true;
             setTimeout(() => {
                 this.throwableObjects.splice(index, 1)
             }, 50);
@@ -119,8 +149,12 @@ class World {
     checkCollisionCharacterFinalboss() {
         if (this.character.isColliding(this.level.finalboss)) {
             this.level.finalboss.clearAllIntervals();
-            this.level.finalboss.win_sound.play();
             gameOver();
+            this.level.finalboss.win_sound.play();
+            this.character.walking_sound.pause();
+            this.character.background_music.pause();
+                    
+            
         }
     }
     

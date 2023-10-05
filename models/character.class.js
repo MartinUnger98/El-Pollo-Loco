@@ -69,11 +69,7 @@ class Character extends MoveableObject{
         'img/2_character_pepe/4_hurt/H-43.png',
     ];
 
-   walking_sound = new Audio('audio/running.mp3')
-   hurt_sound = new Audio('audio/hurt.mp3');
-   dead_sound = new Audio('audio/game_over.mp3');
-   jumping_sound = new Audio('audio/jump.mp3');
-
+  
     constructor() {
         super().loadImage('./img/2_character_pepe/1_idle/idle/I-1.png')
         this.loadImages(this.IMAGES_STANDING);
@@ -90,17 +86,18 @@ class Character extends MoveableObject{
 
         setInterval(() =>{
             this.walking_sound.pause();
-            if(world.keyboard.RIGHT) {
+            if(world.keyboard.RIGHT && isLoading) {
                 this.moveRight();
-                this.walking_sound.play();
+                this.playSound(this.walking_sound);
             }
-            if(world.keyboard.LEFT) {
+            if(world.keyboard.LEFT && isLoading) {
                 this.moveLeft();
-                this.walking_sound.play();
+                this.playSound(this.walking_sound);
             }
 
-            if (world.keyboard.SPACE && !this.isAboveGround()) {
+            if (world.keyboard.SPACE && !this.isAboveGround() && isLoading) {
                 this.jump();
+                this.playSound(this.jumping_sound);
             }
 
             world.camera_x = -this.x + 120;
@@ -111,19 +108,17 @@ class Character extends MoveableObject{
                 this.playAnnimation(this.IMAGES_DEAD);
                 setTimeout(() => {
                     this.clearAllIntervals();
-                    this.dead_sound.play();
+                    this.playSound(this.dead_sound);
                     gameOver();
                 }, 1500);
                 
             }
             else if (this.isHurt()) {
                 this.playAnnimation(this.IMAGES_HURT);
-                this.standingTime = 0;
-                this.hurt_sound.play();
+                this.standingTime = 0; 
             }
             else if (this.isAboveGround()) {
                 this.playAnnimation(this.IMAGES_JUMPING);
-                this.jumping_sound.play();
                 this.standingTime = 0;
             } else{
                 if(world.keyboard.RIGHT || world.keyboard.LEFT) {              
@@ -136,10 +131,14 @@ class Character extends MoveableObject{
                     if (this.standingTime >=6000) {
                         this.playAnnimation(this.IMAGES_SLEEPING);
                     }
-                }
-                    
-                
+                }         
             }
         }, 100);
+
+        setInterval(() => {
+            if (this.isHurt()) {
+                this.playSound(this.hurt_sound);
+            }
+        }, 500);
     }    
 }

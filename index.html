@@ -28,24 +28,25 @@
     <script src="./js/game.js"></script>
 </head>
 <body>
-    <h1>El Pollo loco</h1>
-    <div class="start" id="startScreen">
-        <button onclick="startGame()">START</button>
-    </div>
-    <div class="miniBtns">
-        <img src="img/10_extras/ton-an.png" alt="">
-        <img src="img/10_extras/vollbild.png" alt="">
-        <img src="img/10_extras/deinstellungen.png" alt="">
-    </div>
-    <div class="gameOver d-none" id="gameOver">
-        <button onclick="restartGame()">RESTART</button>
-    </div>
-    <div class="loading d-none" id="loading">
-        <p>Loading</p>
-        <div class="lds-dual-ring"></div>
-        
-    </div>
-    <canvas class="d-none" id="canvas" width="720" height="420"></canvas>
-    
+    <section class="content">
+        <h1>El Pollo loco</h1>
+        <div class="start" id="startScreen">
+            <button onclick="startGame()">START</button>
+        </div>
+        <div class="miniBtns">
+            <img id="audio" src="img/10_extras/ton-an.png" alt="" onclick="toggleMute()">
+            <img id="fullscreen" src="img/10_extras/vollbild.png" alt="" onclick="toggleFullscreen()">
+            <img id="settings" src="img/10_extras/deinstellungen.png" alt="">
+        </div>
+        <div class="gameOver d-none" id="gameOver">
+            <button onclick="restartGame()">RESTART</button>
+        </div>
+        <div class="loading d-none" id="loading">
+            <p>Loading</p>
+            <div class="lds-dual-ring"></div>
+            
+        </div>
+        <canvas class="d-none" id="canvas" width="720" height="420"></canvas>
+    </section>
 </body>
 </html>
