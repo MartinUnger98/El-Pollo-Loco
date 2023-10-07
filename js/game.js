@@ -5,6 +5,7 @@ let isLoading = false;
 let isMuted = false;
 let fullscreen = false;
 
+
 document.addEventListener('fullscreenchange', exitHandler);
 document.addEventListener('webkitfullscreenchange', exitHandler);
 document.addEventListener('mozfullscreenchange', exitHandler);
@@ -65,8 +66,6 @@ function toggleFullscreen() {
     }
     fullscreen = !fullscreen;
 }
-
-
 
 
 function enterFullscreen(element) {

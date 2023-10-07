@@ -46,7 +46,6 @@ class FinalBoss extends MoveableObject {
     ];
 
     hadFirstContact = false;
-    win_sound = new Audio('audio/win.mp3');
 
     constructor() {
         super().loadImage(this.IMAGES_ALERT[0]);
@@ -60,15 +59,37 @@ class FinalBoss extends MoveableObject {
         this.animate();
     }
 
+    hitFinalBoss() {
+        this.energyFinalBoss -= 10;    
+        if (this.energyFinalBoss < 0) {
+            this.energyFinalBoss = 0;
+        }
+        else {
+            this.lastHitFinalBoss = new Date().getTime();
+        }
+    }
+
+    isHurtFinalBoss() {
+        let timepassed = new Date().getTime() - this.lastHitFinalBoss;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+    }
+
+    isDeadFinalBoss() {
+        return this.energyFinalBoss == 0;
+    }
+
     animate() {
         let i = 0
         setInterval(() => {
 
             if (this.isDeadFinalBoss()) {
                 this.playAnnimation(this.IMAGES_DEAD);
+                this.gameOver = true;
+                world.background_music.pause()
                 setTimeout(() => {
                     this.clearAllIntervals();
-                    this.playSound(this.win_sound);
+                    this.playSound(world.win_sound);
                     gameOver();
                 }, 1500);
             }

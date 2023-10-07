@@ -39,47 +39,6 @@ class MoveableObject extends DrawableObject {
                 this.x < mo.x + mo.width &&
                 this.y < mo.y + mo.height;
     } 
-
-    hit() {
-        this.energy -= 5;    
-        if (this.energy < 0) {
-            this.energy = 0;
-        }
-        else {
-            this.lastHit = new Date().getTime();
-        }
-    }
-
-    isHurt() {
-        let timepassed = new Date().getTime() - this.lastHit;
-        timepassed = timepassed / 1000;
-        return timepassed < 1;
-    }
-
-    isDead() {
-        return this.energy == 0;
-    }
-
-    hitFinalBoss() {
-        this.energyFinalBoss -= 20;    
-        if (this.energyFinalBoss < 0) {
-            this.energyFinalBoss = 0;
-        }
-        else {
-            this.lastHitFinalBoss = new Date().getTime();
-        }
-    }
-
-    isHurtFinalBoss() {
-        let timepassed = new Date().getTime() - this.lastHitFinalBoss;
-        timepassed = timepassed / 1000;
-        return timepassed < 1;
-    }
-
-    isDeadFinalBoss() {
-        return this.energyFinalBoss == 0;
-    }
-    
     
 
     playAnnimation(images) {
@@ -89,22 +48,5 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
-    moveRight() {
-        if (this.x < world.level.level_end_x) {
-            this.x += this.speed;
-            this.otherDirection = false;
-        }
-    }
 
-    moveLeft(){
-        if (this.x > 150) {
-            this.x -= this.speed;
-            this.otherDirection = true;
-        }
-    }
-
-    jump() {
-        this.speedY = 25;
-        
-    }
 }

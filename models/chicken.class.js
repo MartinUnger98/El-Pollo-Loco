@@ -34,7 +34,7 @@ class Chicken extends MoveableObject{
             else {
                 this.loadImage(this.IMAGES_DEAD);
                 if (this.musicCounter === 0) {
-                    this.playSound(this.chickenDead_music);
+                    this.playSound(world.chickenDead_music);
                 }
                 this.musicCounter++;
                 setTimeout(() => {

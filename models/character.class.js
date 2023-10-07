@@ -82,22 +82,61 @@ class Character extends MoveableObject{
         this.animate();
     }
 
+    hit() {
+        this.energy -= 5;    
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+        else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 1;
+    }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    moveRight() {
+        if (this.x < world.level.level_end_x) {
+            this.x += this.speed;
+            this.otherDirection = false;
+        }
+    }
+
+    moveLeft(){
+        if (this.x > 150) {
+            this.x -= this.speed;
+            this.otherDirection = true;
+        }
+    }
+
+    jump() {
+        this.speedY = 25;
+        
+    }
+
     animate() {
 
         setInterval(() =>{
-            this.walking_sound.pause();
+            world.walking_sound.pause();
             if(world.keyboard.RIGHT && isLoading) {
                 this.moveRight();
-                this.playSound(this.walking_sound);
+                this.playSound(world.walking_sound);
             }
             if(world.keyboard.LEFT && isLoading) {
                 this.moveLeft();
-                this.playSound(this.walking_sound);
+                this.playSound(world.walking_sound);
             }
 
             if (world.keyboard.SPACE && !this.isAboveGround() && isLoading) {
                 this.jump();
-                this.playSound(this.jumping_sound);
+                this.playSound(world.jumping_sound);
             }
 
             world.camera_x = -this.x + 120;
@@ -108,7 +147,8 @@ class Character extends MoveableObject{
                 this.playAnnimation(this.IMAGES_DEAD);
                 setTimeout(() => {
                     this.clearAllIntervals();
-                    this.playSound(this.dead_sound);
+                    world.background_music.pause()
+                    this.playSound(world.dead_sound);
                     gameOver();
                 }, 1500);
                 
@@ -137,7 +177,7 @@ class Character extends MoveableObject{
 
         setInterval(() => {
             if (this.isHurt()) {
-                this.playSound(this.hurt_sound);
+                this.playSound(world.hurt_sound);
             }
         }, 500);
     }    
