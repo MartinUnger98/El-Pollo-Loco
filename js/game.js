@@ -4,7 +4,14 @@ let keyboard = new Keyboard();
 let isLoading = false;
 let isMuted = false;
 let fullscreen = false;
-
+const keyMapping = {
+    39: "RIGHT",
+    37: "LEFT",
+    38: "UP",
+    40: "DOWN",
+    32: "SPACE",
+    68: "D"
+};
 
 document.addEventListener('fullscreenchange', exitHandler);
 document.addEventListener('webkitfullscreenchange', exitHandler);
@@ -55,14 +62,17 @@ function toggleMute() {
 }
 
 function toggleFullscreen() {
+    let content = document.getElementById("content");
     let fullscreenImage = document.getElementById("fullscreen");
     if (fullscreen) {
         fullscreenImage.src = 'img/10_extras/vollbild.png';
         exitFullscreen();
+        content.classList.remove('fullscreen-mode');
     }
     else {
         fullscreenImage.src = 'img/10_extras/minimieren.png';
-        enterFullscreen(document.body);
+        enterFullscreen(document.getElementById("content"));
+        content.classList.add('fullscreen-mode');
     }
     fullscreen = !fullscreen;
 }
@@ -83,64 +93,36 @@ function enterFullscreen(element) {
 
 function exitFullscreen() {
     if(document.exitFullscreen) {
-      document.exitFullscreen();
+        document.exitFullscreen();
     } 
     else if(document.webkitExitFullscreen) {
-      document.webkitExitFullscreen();
+        document.webkitExitFullscreen();
     }
-    
+    else if(document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    }
 }
 
 
-
 window.addEventListener("keydown", (e) => {
-    if(e.keyCode === 39) {
-        keyboard.RIGHT = true;
+    if(keyMapping[e.keyCode]) {
+        keyboard[keyMapping[e.keyCode]] = true;
     }
-    if(e.keyCode === 37) {
-        keyboard.LEFT = true;
-    }
-    if(e.keyCode === 38) {
-        keyboard.UP = true;
-    }
-    if(e.keyCode === 40) {
-        keyboard.DOWN = true;
-    }
-    if(e.keyCode === 32) {
-        keyboard.SPACE = true;
-    }
-    if(e.keyCode === 68) {
-        keyboard.D = true;
-    }    
 });
 
-
 window.addEventListener("keyup", (e) => {
-    if(e.keyCode === 39) {
-        keyboard.RIGHT = false;
+    if(keyMapping[e.keyCode]) {
+        keyboard[keyMapping[e.keyCode]] = false;
     }
-    if(e.keyCode === 37) {
-        keyboard.LEFT = false;
-    }
-    if(e.keyCode === 38) {
-        keyboard.UP = false;
-    }
-    if(e.keyCode === 40) {
-        keyboard.DOWN = false;
-    }
-    if(e.keyCode === 32) {
-        keyboard.SPACE = false;
-    }
-    if(e.keyCode === 68) {
-        keyboard.D = false;
-    }
-
 });
 
 
 function exitHandler() {
+    let content = document.getElementById("content");
     if (!document.fullscreenElement && !document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
         document.getElementById("fullscreen").src = 'img/10_extras/vollbild.png';
+        content.classList.remove('fullscreen-mode');
         fullscreen = false;
     }
-}  
+}
+

@@ -7,7 +7,7 @@ body {
     margin: 0;
 }
 
-.content {
+.section {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -17,6 +17,16 @@ body {
     background-size: cover;
     height: 100vh;
     font-family: 'zabras', Arial, Helvetica, sans-serif;
+}
+
+.fullscreen-mode {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw; /* sorgt dafür, dass der Inhalt nicht über den Bildschirm hinausgeht */
+    max-height: 100vh; /* sorgt dafür, dass der Inhalt nicht über den Bildschirm hinausgeht */
+    /* Hält das Seitenverhältnis bei 420:720 bei */
+    aspect-ratio: 420/720;
+    object-fit: contain; /* hält das Seitenverhältnis bei */
 }
 h1 {
     font-size: 84px;
