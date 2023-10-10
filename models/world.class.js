@@ -11,6 +11,7 @@ class World {
     bossStatusBar = new BossStatusBar();
     throwableObjects = [];
     bottleCounter = 0;
+    coinsCounter = 0;
     gameOver = false;
     background_music = new Audio('audio/game_music.mp3');
     chickenDead_music = new Audio('audio/chicken.mp3');
@@ -43,7 +44,6 @@ class World {
             this.background_music.volume = 0.3;    
             this.background_music.play();    
         }
-        
     }
 
     run() {
@@ -59,11 +59,10 @@ class World {
             if (isMuted) {
                 this.background_music.pause();
             }
-            else if (!gameOver) {
+            else if (!this.gameOver) {
                 this.background_music.play();
             }             
         }, 25);
-
     }
 
 
@@ -95,12 +94,15 @@ class World {
         this.checkCollisionCharacterCoin();
         this.checkCollisionCharacterBottle();
         this.checkCollisionCharacterFinalboss();
-        
     }
     checkCollisionJumpOnEnemy() {
-        this.level.enemies.forEach((enemy, index) => {
+        this.level.enemies.forEach(enemy => {
             if(this.character.isColliding(enemy) && this.character.isAboveGround()) {
+                if (!enemy.chickenIsDead) {
+                    this.character.jump();
+                };
                 enemy.chickenIsDead = true;
+                
             }
         });
     }
@@ -118,7 +120,7 @@ class World {
         this.throwableObjects.forEach((bottle, index) => {
             this.checkCollisionBottleFinalboss(bottle, index);
             this.checkCollisionBottleGround(bottle, index);
-        })
+        });
     }
 
     checkCollisionBottleFinalboss(bottle, index) {
@@ -130,7 +132,7 @@ class World {
             setTimeout(() => {
                 this.throwableObjects.splice(index, 1)
             }, 200);
-        }
+        };
     }
 
     checkCollisionBottleGround(bottle, index) {
@@ -140,7 +142,7 @@ class World {
             setTimeout(() => {
                 this.throwableObjects.splice(index, 1)
             }, 50);
-        }
+        };
     }
 
     checkCollisionCharacterCoin() {
@@ -148,10 +150,11 @@ class World {
             if (this.character.isColliding(coin)) {
                 coin.collected = true;
                 coin.playSound(this.collectCoin_sound);
-                this.coinStatusBar.setPercentage(this.checkCollected(this.level.coins));
+                this.coinsCounter++;
+                this.coinStatusBar.setPercentage(this.coinsCounter);
                 this.level.coins.splice(index, 1);
             }
-        })
+        });
     }
 
     checkCollisionCharacterBottle() {
@@ -163,7 +166,7 @@ class World {
                 this.bottleStatusBar.setPercentage(this.bottleCounter);
                 this.level.bottles.splice(index, 1);
             }
-        })
+        });
     }
 
     checkCollisionCharacterFinalboss() {
@@ -172,9 +175,9 @@ class World {
             this.background_music.pause();
             this.walking_sound.pause();
             this.level.finalboss.clearAllIntervals();
-            gameOver();
+            gameOverLose();
             this.level.finalboss.playSound(this.lose_sound);
-        }
+        };
     }
     
     checkCollected(array) {
@@ -190,55 +193,43 @@ class World {
     
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.ctx.translate(-this.camera_x, 0); //Back
-        /* ---------- Space for fixed objects-----------*/
+        this.ctx.translate(-this.camera_x, 0); 
         this.addToMap(this.lifeStatusBar);
         this.addToMap(this.coinStatusBar);
         this.addToMap(this.bottleStatusBar);
         if (this.level.finalboss.hadFirstContact) {
             this.addToMap(this.bossStatusBar);
-        }
-        this.ctx.translate(this.camera_x, 0); //Forwards
-
-        
+        };
+        this.ctx.translate(this.camera_x, 0);        
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.level.finalboss);
         this.addObjectsToMap(this.throwableObjects);
-
         this.ctx.translate(-this.camera_x, 0);
-     
-        //draw wird immer wieder aufgerufen
         let self = this;
         requestAnimationFrame(function(){
             self.draw();
         });
-
     }
     addObjectsToMap(objects) {
         objects.forEach(object =>{
             this.addToMap(object);
         })
-
     }
 
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
-        }
-
+        };
         mo.draw(this.ctx);
-
         if (mo.otherDirection) {
            this.flipImageBack(mo);
-        }
+        };
     }
 
     flipImage(mo) {

@@ -38,11 +38,15 @@ async function game() {
 
 function showGame() {
     document.getElementById("loading").classList.add("d-none");
-    document.getElementById("canvas").classList.remove("d-none");
+    document.getElementById("canvasContent").classList.remove("d-none");
 }
 
-function gameOver() {
-    document.getElementById("gameOver").classList.remove("d-none");
+function gameOverWin() {
+    document.getElementById("gameOverWin").classList.remove("d-none");
+}
+
+function gameOverLose() {
+    document.getElementById("gameOverLose").classList.remove("d-none");
 }
 
 function restartGame() {
@@ -124,5 +128,12 @@ function exitHandler() {
         content.classList.remove('fullscreen-mode');
         fullscreen = false;
     }
+}
+
+
+function showHelpPage() {
+    let help = document.getElementById('help');
+    help.classList.remove('d-none');
+    help.innerHTML = showHelpFirstPage();
 }
 

@@ -7,14 +7,22 @@ body {
     margin: 0;
 }
 
-.section {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url('img/10_extras/backgroundImg.jpg');
+.background-image {
     background-repeat: 0;
     background-size: cover;
+}
+
+.width-height-100 {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.border-radius-20 {
+    border-radius: 20px;
+}
+
+.section {
+    background-image: url('img/10_extras/backgroundImg.jpg');
     height: 100vh;
     font-family: 'zabras', Arial, Helvetica, sans-serif;
 }
@@ -22,14 +30,14 @@ body {
 .fullscreen-mode {
     width: 100vw;
     height: 100vh;
-    max-width: 100vw; /* sorgt dafür, dass der Inhalt nicht über den Bildschirm hinausgeht */
-    max-height: 100vh; /* sorgt dafür, dass der Inhalt nicht über den Bildschirm hinausgeht */
-    /* Hält das Seitenverhältnis bei 420:720 bei */
+    max-width: 100vw; 
+    max-height: 100vh;
     aspect-ratio: 420/720;
-    object-fit: contain; /* hält das Seitenverhältnis bei */
+    object-fit: contain;
 }
+
 h1 {
-    font-size: 84px;
+    font-size: 84px !important;
     letter-spacing: 5px;
     text-shadow: 2px 6px 8px rgba(0, 0, 0, 0.2);
     margin-block-end: 0;
@@ -39,63 +47,47 @@ canvas {
     background-color: black;
     margin-bottom: 100px;
     border-radius: 20px;
-    
 }
 
-.d-none {
-    display: none !important;
+
+#content {
+    height: 420px;
+    width: 720px;  
 }
+
 
 .start {
-    height: 420px;
-    width: 720px;
     background-image: url('img/9_intro_outro_screens/start/startscreen_1.png');
-    background-repeat: 0;
-    background-size: cover;
-    border-radius: 20px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 100px;
 }
 
-.gameOver {
-    height: 420px;
-    width: 720px;
+
+.gameOverWin {
     background-image: url('img/9_intro_outro_screens/game_over/game over!.png');
-    background-repeat: 0;
-    background-size: cover;
-    border-radius: 20px;
-    position: absolute;
-    top: calc(50vh - (420px / 2) + (101px / 4));
-    left: auto;
-    display: flex;
-    justify-content: center;
+}
+
+.gameOverLose {
+    background-image: url('img/9_intro_outro_screens/game_over/oh no you lost!.png');
 }
 
 button {
-    border-radius: 14px;
-    width: 121px;
-    height: 38px;
-    margin-top: 50px;
-    font-size: 30px;
+    border-radius: 14px !important;
+    width: 146px;
+    height: 55px;
+    margin-top: 30px !important;
+    font-size: 45px !important;
     font-family: 'zabras', Arial, Helvetica, sans-serif;
     background-color: #ffb900;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding-top: 6px;
 }
 
 button:hover {
     scale: 1.1;
-    cursor: pointer;
 }
 
 .miniBtns {
     position: absolute;
-    top: calc(50vh - 180px);
-    left: calc(50vw + 230px);
-    display: flex;
+    top: 15px;
+    right: 30px;
     gap: 8px;
 }
 
@@ -109,21 +101,27 @@ button:hover {
     cursor: pointer;
 }
 
-.loading {
-    height: 420px;
-    width: 720px;
-    border-radius: 20px;
-    position: absolute;
-    top: calc(50vh - (424px / 2) + (86px / 4));
-    left: auto;
-    display: flex;
-    justify-content: center;    
+.loading, .help {
+    width: 100%;
+    height: 100%;
     background-color: #efe07c;
     opacity: 1;
     background-image:  repeating-radial-gradient( circle at 0 0, transparent 0, #efe07c 19px ), repeating-linear-gradient( #f1a80a, #f4a481 );
-    flex-direction: column;
-    align-items: center;
     font-size: 84px;
+}
+
+.help {
+    top: 0px;
+    font-size: 64px;
+}
+
+.gapHelp {
+    gap: 62px;
+    margin-top: 20px;
+}
+
+.margin-top {
+    margin-top: 50px
 }
 
 .loading p{
@@ -155,6 +153,63 @@ button:hover {
     }
   }
 
+.closeImg {
+    height: 50px;
+    width: 50px;
+    right: 15px;
+    top: 15px;
+}
+
+.closeImg:hover {
+    scale: 1.2;
+}
+
+.actionImg {
+    height: 150px;
+    width: 150px;
+}
+
+.spaceImg {
+    height: 150px;
+    width: 150px;
+}
+
+.keysImgBox {
+    margin: 50px 0px 0px 50px;
+}
+
+.pepe {
+    width: 180px;
+    height: 310px;
+}
+
+.nextBtn {
+    right: 50px;
+    bottom: 20px;
+}
+
+.backBtn {
+    left: 50px;
+    bottom: 20px;
+}
+
+
+.bottle {
+    width: 90px;
+    height: 90px;
+    margin-top: 50px;
+    margin-left: -20px;
+}
+
+.finalBoss {
+    margin-top: 40px;
+    width: 180px;
+    height: 310px;
+}
+
+.negative-margin-top {
+    margin-top: -10px;
+}
 
   
   

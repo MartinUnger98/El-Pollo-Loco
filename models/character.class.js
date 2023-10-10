@@ -149,7 +149,7 @@ class Character extends MoveableObject{
                     this.clearAllIntervals();
                     world.background_music.pause()
                     this.playSound(world.dead_sound);
-                    gameOver();
+                    gameOverLose();
                 }, 1500);
                 
             }

@@ -90,7 +90,7 @@ class FinalBoss extends MoveableObject {
                 setTimeout(() => {
                     this.clearAllIntervals();
                     this.playSound(world.win_sound);
-                    gameOver();
+                    gameOverWin();
                 }, 1500);
             }
 
