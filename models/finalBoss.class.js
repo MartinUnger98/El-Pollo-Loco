@@ -85,7 +85,7 @@ class FinalBoss extends MoveableObject {
 
             if (this.isDeadFinalBoss()) {
                 this.playAnnimation(this.IMAGES_DEAD);
-                this.gameOver = true;
+                world.gameOver = true;
                 world.background_music.pause()
                 setTimeout(() => {
                     this.clearAllIntervals();

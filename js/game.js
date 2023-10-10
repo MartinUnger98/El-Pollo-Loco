@@ -137,3 +137,22 @@ function showHelpPage() {
     help.innerHTML = showHelpFirstPage();
 }
 
+function closeHelpPage() {
+    let help = document.getElementById('help');
+    help.classList.add('d-none');
+}
+
+function showFirstPage() {
+    let help = document.getElementById('help');
+    help.innerHTML = showHelpFirstPage();
+}
+
+function showSecondPage() {
+    let help = document.getElementById('help');
+    help.innerHTML = showHelpSecondPage();
+}
+
+function showThirdPage() {
+    let help = document.getElementById('help');
+    help.innerHTML = showHelpThirdPage();
+}
