@@ -63,4 +63,110 @@ class DrawableObject {
         }
     }
 
+
+    /**
+     * sets the current percentage of the status-bar
+     * 
+     * @param {number} percentage 
+     */
+    setPercentage(percentage) {
+        this.percentage = percentage;
+        let path = this.IMAGES[this.resolveImageIndex()];
+        this.img = this.imageCache[path];
+    } 
+
+
+    /**
+     * 
+     * @returns the number of the picture with the right percentage
+     */
+    resolveImageIndex() {
+        if (this instanceof BossStatusBar || this instanceof LifeStatusBar) {
+            return this.resolveLife();
+        };
+        if (this instanceof CoinStatusBar) {
+            return this.resolveCoin();
+        };
+        if (this instanceof BottleStatusBar) {
+            return this.resolveBottle();
+        };
+    } 
+    
+    /**
+     * 
+     * @returns the right position in the images array 
+     */
+    resolveLife() {
+        if(this.percentage == 100) {
+            return 5;
+        }
+        else if (this.percentage > 60) {
+            return 4;
+        }
+        else if(this.percentage > 40) { 
+            return 3;
+        }
+        else if(this.percentage > 20) {
+            return 2;
+        }
+        else if(this.percentage > 0) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+    /**
+     * 
+     * @returns the right position in the images array 
+     */
+    resolveCoin() {
+        if(this.percentage === 100) {
+            return 5;
+        }
+        else if (this.percentage === 80) {
+            return 4;
+        }
+        else if(this.percentage === 60) { 
+            return 3;
+        }
+        else if(this.percentage === 40) {
+            return 2;
+        }
+        else if(this.percentage === 20) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+
+    /**
+     * 
+     * @returns the right position in the images array 
+     */
+    resolveBottle() {
+        if(this.percentage === 10) {
+            return 5;
+        }
+        else if (this.percentage >= 8) {
+            return 4;
+        }
+        else if(this.percentage >= 6) { 
+            return 3;
+        }
+        else if(this.percentage >= 4) {
+            return 2;
+        }
+        else if(this.percentage >= 1) {
+            return 1;
+        }
+        else {
+            return 0;
+        }
+    }
+
 }

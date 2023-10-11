@@ -88,7 +88,7 @@ class Character extends MoveableObject{
      * 
      */
     hit() {
-        this.energy -= 5;    
+        this.energy -= 1;    
         if (this.energy < 0) {
             this.energy = 0;
         }
@@ -232,7 +232,8 @@ class Character extends MoveableObject{
         this.playAnnimation(this.IMAGES_DEAD);
         setTimeout(() => {
             this.clearAllIntervals();
-            world.background_music.pause()
+            world.background_music.pause();
+            world.walking_sound.pause();
             this.playSound(world.dead_sound);
             gameOverLose();
         }, 1500);

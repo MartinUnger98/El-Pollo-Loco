@@ -59,8 +59,11 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollision();
-            this.checkThrowObjects();
             this.checkBackgroundMusic();
+        }, 25);
+        setInterval(() => {
+            this.checkThrowObjects();
+            this.checkCollisionThrowableObject();
         }, 200);
     }
 
@@ -70,14 +73,12 @@ class World {
      * 
      */
     checkBackgroundMusic() {
-        setInterval(() => {
-            if (isMuted) {
-                this.background_music.pause();
-            }
-            else if (!this.gameOver) {
-                this.background_music.play();
-            }             
-        }, 25);
+        if (isMuted) {
+            this.background_music.pause();
+        }
+        else if (!this.gameOver) {
+            this.background_music.play();
+        }          
     }
 
 
@@ -121,7 +122,6 @@ class World {
     checkCollision() {
         this.checkCollisionJumpOnEnemy();
         this.checkCollisionCharacterEnemy();
-        this.checkCollisionThrowableObject();
         this.checkCollisionCharacterCoin();
         this.checkCollisionCharacterBottle();
         this.checkCollisionCharacterFinalboss();
@@ -216,7 +216,7 @@ class World {
             if (this.character.isColliding(coin)) {
                 coin.collected = true;
                 coin.playSound(this.collectCoin_sound);
-                this.coinsCounter++;
+                this.coinsCounter = this.coinsCounter + 20;
                 this.coinStatusBar.setPercentage(this.coinsCounter);
                 this.level.coins.splice(index, 1);
             }

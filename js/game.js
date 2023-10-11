@@ -51,7 +51,7 @@ async function startGame() {
     document.getElementById("startScreen").classList.add("d-none");
     document.getElementById("loading").classList.remove("d-none");
     if (!isLoading) {
-        await game();
+        await newGame();
         setTimeout(() => {
             isLoading = true;
             showGame();
@@ -64,7 +64,7 @@ async function startGame() {
  * sets a new World in the canvas
  * 
  */
-async function game() {
+async function newGame() {
     canvas = document.getElementById("canvas");
     initLevel();
     world = new World(canvas, keyboard);
@@ -107,7 +107,17 @@ function gameOverLose() {
  * 
  */
 function restartGame() {
-    window.location.reload();
+    document.getElementById('gameOverWin').classList.add("d-none");
+    document.getElementById('gameOverLose').classList.add("d-none");
+    document.getElementById('loading').classList.remove("d-none");
+    document.getElementById('leftMobile-container').classList.add("d-none");
+    document.getElementById('rightMobile-container').classList.add("d-none");
+    newGame();
+    setTimeout(() => {
+        document.getElementById('loading').classList.add("d-none");
+        document.getElementById('leftMobile-container').classList.remove("d-none");
+        document.getElementById('rightMobile-container').classList.remove("d-none");
+    }, 1000);
 }
 
 

@@ -46,10 +46,19 @@ class MoveableObject extends DrawableObject {
      * @returns if an object collides withe the moveable object (mo)
      */
     isColliding(mo) {
-        return  this.x + this.width > mo.x &&
+        if (this instanceof Character) {
+            return this.x + 60 + this.width - 105 > mo.x &&
+                this.y + this.height > mo.y &&
+                this.x + 60 < mo.x + mo.width &&
+                this.y + 130 < mo.y + mo.height;
+        }
+        else {
+            return this.x + this.width > mo.x &&
                 this.y + this.height > mo.y &&
                 this.x < mo.x + mo.width &&
                 this.y < mo.y + mo.height;
+        }
+        
     } 
     
 

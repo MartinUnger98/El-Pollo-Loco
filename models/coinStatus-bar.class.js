@@ -8,7 +8,7 @@ class CoinStatusBar extends DrawableObject {
         'img/7_statusbars/1_statusbar/1_statusbar_coin/orange/100.png',        
     ];
 
-    coins_collected = 0;
+    percentage = 0;
 
     constructor() {
         super();
@@ -19,42 +19,4 @@ class CoinStatusBar extends DrawableObject {
         this.width = 200;
         this.height = 45;
     }
-
-
-    /**
-     * sets the current percentage of the status-bar
-     * 
-     * @param {number} coins_collected 
-     */
-    setPercentage(coins_collected) {
-        this.coins_collected = coins_collected;
-        let path = this.IMAGES[this.resolveImageIndex()];
-        this.img = this.imageCache[path];
-    }  
-
-
-    /**
-     * 
-     * @returns the number of the picture with the right percentage
-     */
-    resolveImageIndex() {
-        if(this.coins_collected === 0) {
-            return 0;
-        }
-        else if (this.coins_collected === 1) {
-            return 1;
-        }
-        else if(this.coins_collected === 2) { 
-            return 2;
-        }
-        else if(this.coins_collected === 3) {
-            return 3;
-        }
-        else if(this.coins_collected === 4) {
-            return 4;
-        }
-        else {
-            return 5;
-        }
-    }   
 }

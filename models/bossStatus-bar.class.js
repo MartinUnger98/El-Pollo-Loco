@@ -18,18 +18,6 @@ class BossStatusBar extends DrawableObject {
         this.width = 200;
         this.height = 45;
     }
-    
-
-    /**
-     * sets the current percentage of the status-bar
-     * 
-     * @param {number} percentage 
-     */
-    setPercentage(percentage) {
-        this.percentage = percentage;
-        let path = this.IMAGES[this.resolveImageIndex()];
-        this.img = this.imageCache[path];
-    }  
 
 
     /**
