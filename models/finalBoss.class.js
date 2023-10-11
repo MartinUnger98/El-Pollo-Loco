@@ -198,5 +198,10 @@ class FinalBoss extends MoveableObject {
                 this.x -= this.speed;    
             }        
         }, 1000 / 60);
+        setInterval(() => {
+            if (this.isHurtFinalBoss()) {
+                this.playSound(world.finalbossHurt_sound);
+            }
+        }, 500);
     }
 }
