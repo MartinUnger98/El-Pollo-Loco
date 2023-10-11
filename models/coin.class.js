@@ -16,20 +16,39 @@ class Coin extends MoveableObject {
         this.animate();
     }
 
+    /**
+     * animation when the coin is collected
+     *
+     */
+    coinCollected() {
+        if (this.collected) {
+            this.IMAGES = [];
+            this.loadImage(this.IMAGES);
+        }
+    }
 
+
+    /**
+     * animation of the coin
+     * 
+     */
+    coinAnnimation() {
+        if (!this.collected) {
+            this.playAnnimation(this.IMAGES);
+        }
+    }
+
+
+    /**
+     * animate the coin
+     * 
+     */
     animate() {
         setInterval(() => {
-            if (this.collected) {
-                this.IMAGES = [];
-                this.loadImage(this.IMAGES);
-            }
+            this.coinCollected();
         }, 100);
-
         setInterval(() => {
-            if (!this.collected) {
-                this.playAnnimation(this.IMAGES);
-            }
+            this.coinAnnimation();
         }, 500);
-       
     }
 }

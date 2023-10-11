@@ -10,6 +10,11 @@ class Cloud extends MoveableObject {
         this.animate();
     }
 
+
+    /**
+     * animates the clouds
+     * 
+     */
     animate() {
         setInterval( () => {
             this.x -= this.speed;

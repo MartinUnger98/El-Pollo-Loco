@@ -10,9 +10,11 @@ class MoveableObject extends DrawableObject {
     lastHitFinalBoss = 0;
     notMoving = 0;
    
-    
 
-
+    /**
+     * reduce the y height of an object (fake gravity)
+     * 
+     */
     applyGravity() {
         setInterval(() => { 
             if (this.isAboveGround() || this.speedY > 0) {
@@ -22,6 +24,11 @@ class MoveableObject extends DrawableObject {
         }, 1000 / 25);
     }
 
+
+    /**
+     * 
+     * @returns if the object is aboveground
+     */
     isAboveGround() {
         if (this instanceof ThrowableObject) {
             return this.y <= 280;
@@ -33,6 +40,11 @@ class MoveableObject extends DrawableObject {
     }
    
 
+    /**
+     * 
+     * @param {object} mo 
+     * @returns if an object collides withe the moveable object (mo)
+     */
     isColliding(mo) {
         return  this.x + this.width > mo.x &&
                 this.y + this.height > mo.y &&
@@ -41,6 +53,11 @@ class MoveableObject extends DrawableObject {
     } 
     
 
+    /**
+     * plays an annimation
+     * 
+     * @param {Array} images 
+     */
     playAnnimation(images) {
         let i = this.currentImage % images.length;
         let path = images[i];
@@ -48,5 +65,16 @@ class MoveableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
+    /**
+     * let the chickens move left
+     * 
+     */
+    moveChicken() {
+        if (!this.chickenIsDead) {
+            this.x -= this.speed;
+        }
+    }
+    
 
 }

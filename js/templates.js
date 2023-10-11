@@ -1,3 +1,7 @@
+/**
+ * 
+ * @returns the html code for the first help page
+ */
 function showHelpFirstPage() {
     return /*html */ `
         <div class=" d-flex justify-content-center align-items-center gapHelp" >
@@ -12,6 +16,11 @@ function showHelpFirstPage() {
     `;
 }
 
+
+/**
+ * 
+ * @returns the html code for the second help page
+ */
 function showHelpSecondPage() {
     return /*html */ `
         <div class=" d-flex justify-content-center align-items-center gapHelp" >
@@ -27,6 +36,11 @@ function showHelpSecondPage() {
     `;
 }
 
+
+/**
+ * 
+ * @returns the html code for the third help page
+ */
 function showHelpThirdPage() {
     return /*html */ `
         <div class=" d-flex justify-content-center align-items-center gapHelp" >

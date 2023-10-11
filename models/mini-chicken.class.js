@@ -19,27 +19,57 @@ class MiniChicken extends MoveableObject{
         this.animate();
     }
 
+
+    /**
+     * animations from chicken
+     * 
+     */
+    chickenAnnimation() {
+        if (!this.chickenIsDead) {
+            this.chickenAnnimationWalk();
+        }
+        else {
+            this.chickenAnnimationDead();
+        }      
+    }
+
+
+    /**
+     * animation at walking
+     * 
+     */
+    chickenAnnimationWalk() {
+        this.playAnnimation(this.IMAGES_WALKING);
+    }
+
+
+    /**
+     * animation at death
+     * 
+     */
+    chickenAnnimationDead() {
+        this.loadImage(this.IMAGES_DEAD);
+        if (this.musicCounter === 0) {
+            this.playSound(world.chickenDead_music);
+        }
+        this.musicCounter++;
+        setTimeout(() => {
+            this.IMAGES_DEAD = [];
+        }, 500);
+    }
+
+
+    /**
+     * animates the chicken
+     * 
+     */
     animate() {
         setInterval( () => {
-            if (!this.chickenIsDead) {
-                this.x -= this.speed;
-            }
+            this.moveChicken();
         }, 1000 / 60);
 
         setInterval(() =>{
-            if (!this.chickenIsDead) {
-                this.playAnnimation(this.IMAGES_WALKING);
-            }
-            else {
-                this.loadImage(this.IMAGES_DEAD);
-                if (this.musicCounter === 0) {
-                    this.playSound(world.chickenDead_music);
-                }
-                this.musicCounter++;
-                setTimeout(() => {
-                    this.IMAGES_DEAD = [];
-                }, 500);
-            }      
+            this.chickenAnnimation();
         }, 200);
     }
 }

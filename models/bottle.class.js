@@ -15,6 +15,10 @@ class Bottle extends MoveableObject {
     }
 
 
+    /**
+     * animate the bottle
+     * 
+     */
     animate() {
         setInterval(() => {
             if (!this.collected) {
@@ -23,10 +27,7 @@ class Bottle extends MoveableObject {
             else{
                 this.IMAGES = [];
                 this.loadImage(this.IMAGES);
-            }
-            
+            }            
         }, 100);
-        
     }
-
 }

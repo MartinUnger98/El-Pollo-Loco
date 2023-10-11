@@ -5,6 +5,7 @@
 
 body {
     margin: 0;
+    overflow: hidden;
 }
 
 .background-image {
@@ -41,6 +42,7 @@ h1 {
     letter-spacing: 5px;
     text-shadow: 2px 6px 8px rgba(0, 0, 0, 0.2);
     margin-block-end: 0;
+    text-align: center;
 }
 
 canvas {
@@ -52,7 +54,8 @@ canvas {
 
 #content {
     height: 420px;
-    width: 720px;  
+    width: 720px;
+    text-align: center;  
 }
 
 
@@ -101,7 +104,7 @@ button:hover {
     cursor: pointer;
 }
 
-.loading, .help {
+.loading, .help, .rotateDevice {
     width: 100%;
     height: 100%;
     background-color: #efe07c;
@@ -113,6 +116,7 @@ button:hover {
 .help {
     top: 0px;
     font-size: 64px;
+    z-index: 1;
 }
 
 .gapHelp {
@@ -211,5 +215,82 @@ button:hover {
     margin-top: -10px;
 }
 
+
+.mobile-btns {
+    width: 60px;
+    height: 60px;
+}
   
-  
+.mobile-container {
+    bottom: 10px;
+}
+
+#leftMobile-container {
+    bottom: 10px;
+    left: 30px;
+    gap: 16px;
+}
+
+#rightMobile-container{
+    bottom: 10px;
+    right: 30px;
+    gap: 16px;
+}
+
+
+#right_button {
+    rotate: 180deg;
+}
+
+#jump_button {
+    rotate: 90deg;
+}
+
+#throw_button {
+    border: 5px solid black;
+    border-radius: 50%;
+    background-color: #efe07c;
+}
+
+.rotateDevice {
+    display: none;
+}
+
+@media (max-width: 720px) {
+    .rotateDevice {
+        top: 0;
+        left: 0;
+        display: flex;
+    }   
+}
+
+
+@media only screen and (max-width: 720px) {
+    #content {
+        width: 90vw;
+    }
+}
+
+@media only screen and (max-height: 530px) {
+    h1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 360px) {
+    h1 {
+        display: none;
+    }
+}
+
+@media only screen and (max-height: 420px) {
+    #content {
+        height: 100vh;
+    }
+    .rotateDevice {
+        top: 0;
+        left: 0;
+        display: flex;
+        font-size: 64px;
+    }   
+}

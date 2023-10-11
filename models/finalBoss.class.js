@@ -3,6 +3,7 @@ class FinalBoss extends MoveableObject {
     width = 200;
     height = 400;
     y = 0;
+    i = 0;
 
     IMAGES_WALK = [
         'img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -59,6 +60,11 @@ class FinalBoss extends MoveableObject {
         this.animate();
     }
 
+
+    /**
+     * drains energy from the target
+     * 
+     */
     hitFinalBoss() {
         this.energyFinalBoss -= 10;    
         if (this.energyFinalBoss < 0) {
@@ -69,54 +75,126 @@ class FinalBoss extends MoveableObject {
         }
     }
 
+
+    /**
+     * 
+     * @returns if the last hit was 1 second ago or not
+     */
     isHurtFinalBoss() {
         let timepassed = new Date().getTime() - this.lastHitFinalBoss;
         timepassed = timepassed / 1000;
         return timepassed < 1;
     }
 
+
+    /**
+     * 
+     * @returns if the energy is 0 
+     */
     isDeadFinalBoss() {
         return this.energyFinalBoss == 0;
     }
 
+
+    /**
+     * animation of the final boss
+     * 
+     */
+    finalBossAnnimation() {
+        if (this.isDeadFinalBoss()) {
+            this.finalBossAnnimationDead();
+        }
+        else if (this.isHurtFinalBoss()) {
+            this.finalBossAnnimationHurt();
+        }        
+        else if (this.i < 15) {
+            this.finalBossAnnimationAlert();     
+        }
+        else if (this.i < 30) {
+            this.finalBossAnnimationAttack();
+        }
+        else {        
+            this.finalBossAnnimationWalk();
+        }
+        this.i++;    
+        this.finalBossFirstContact();   
+    }
+
+
+    /**
+     * animation at death
+     * 
+     */
+    finalBossAnnimationDead() {
+        this.playAnnimation(this.IMAGES_DEAD);
+        world.gameOver = true;
+        world.background_music.pause()
+        setTimeout(() => {
+            this.clearAllIntervals();
+            this.playSound(world.win_sound);
+            gameOverWin();
+        }, 1500);
+    }
+
+
+    /**
+     * animation at hurt
+     * 
+     */
+    finalBossAnnimationHurt() {
+        this.playAnnimation(this.IMAGES_HURT);
+    }
+
+
+    /**
+     * animation at alert
+     * 
+     */
+    finalBossAnnimationAlert() {
+        this.playAnnimation(this.IMAGES_ALERT); 
+    }
+
+
+    /**
+     * animation at attack
+     * 
+     */
+    finalBossAnnimationAttack() {
+        this.playAnnimation(this.IMAGES_ATTACK);
+    }
+    
+
+    /**
+     * animation at walking
+     * 
+     */
+    finalBossAnnimationWalk() {
+        this.playAnnimation(this.IMAGES_WALK);
+    }
+
+
+    /**
+     * checks if the character had first contact with the final boss
+     * 
+     */
+    finalBossFirstContact() {
+        if (world.character.x > 1425 && !this.hadFirstContact) {
+            this.i = 0;
+            this.hadFirstContact = true;
+        }
+    }
+
+
+    /**
+     * animates the final boss
+     * 
+     */
     animate() {
-        let i = 0
         setInterval(() => {
-
-            if (this.isDeadFinalBoss()) {
-                this.playAnnimation(this.IMAGES_DEAD);
-                world.gameOver = true;
-                world.background_music.pause()
-                setTimeout(() => {
-                    this.clearAllIntervals();
-                    this.playSound(world.win_sound);
-                    gameOverWin();
-                }, 1500);
-            }
-
-            else if (this.isHurtFinalBoss()) {
-                this.playAnnimation(this.IMAGES_HURT);
-            }
-            
-            else if (i < 15) {
-                this.playAnnimation(this.IMAGES_ALERT);        
-            }
-            else if (i < 30) {
-                this.playAnnimation(this.IMAGES_ATTACK);
-            }
-            else {        
-                this.playAnnimation(this.IMAGES_WALK);
-            }
-            i++;
-
-            if (world.character.x > 1425 && !this.hadFirstContact) {
-                i = 0;
-                this.hadFirstContact = true;
-            }
+            this.finalBossAnnimation();            
         }, 200);
-        
         setInterval(() => {
-            if (this.hadFirstContact && i > 30 && !this.isDeadFinalBoss() && !this.isHurtFinalBoss()) {
+            if (this.hadFirstContact && this.i > 30 && !this.isDeadFinalBoss() && !this.isHurtFinalBoss()) {
                 this.x -= this.speed;    
             }        
         }, 1000 / 60);

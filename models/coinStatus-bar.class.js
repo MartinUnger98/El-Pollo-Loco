@@ -20,12 +20,23 @@ class CoinStatusBar extends DrawableObject {
         this.height = 45;
     }
 
+
+    /**
+     * sets the current percentage of the status-bar
+     * 
+     * @param {number} coins_collected 
+     */
     setPercentage(coins_collected) {
         this.coins_collected = coins_collected;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }  
 
+
+    /**
+     * 
+     * @returns the number of the picture with the right percentage
+     */
     resolveImageIndex() {
         if(this.coins_collected === 0) {
             return 0;

@@ -30,6 +30,11 @@ class ThrowableObject extends MoveableObject {
         
     }
 
+
+    /**
+     * throws an bottle and make a curve
+     * 
+     */
     throw() {
         this.speedY = 20;
         if (!this.isColliding) {
@@ -37,14 +42,17 @@ class ThrowableObject extends MoveableObject {
             setInterval(() => {
                 this.x += 10;
             }, 25);   
-        }        
-        
+        }       
         setInterval(() => {
             this.animate();
         }, 100);
-        
     }
 
+
+    /**
+     * animates the bottle
+     * 
+     */
     animate() {
         if (this.isAboveGround() && !this.isColliding) {
             this.playAnnimation(this.IMAGES_ROATATION);  

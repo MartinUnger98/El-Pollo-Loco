@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,17 +40,12 @@
       crossorigin="anonymous">
     </script>
 </head>
-<body>
+<body onload="initMobile()">
     <section class="section background-image d-flex justify-content-center flex-column align-items-center">
         <h1>El Pollo loco</h1>
         <div id="content" class="position-relative">
             <div class="start border-radius-20 width-height-100 background-image d-flex fullscreen-mode justify-content-center" id="startScreen">
                 <button class="d-flex justify-content-center align-items-center" onclick="startGame()">START</button>
-            </div>
-            <div class="miniBtns d-flex position-absolute">
-                <img id="audio" src="img/10_extras/ton-an.png" alt="" onclick="toggleMute()">
-                <img id="fullscreen" src="img/10_extras/vollbild.png" alt="" onclick="toggleFullscreen()">
-                <img id="settings" src="img/10_extras/deinstellungen.png" alt="" onclick="showHelpPage()">
             </div>
             <div class="gameOverWin border-radius-20 width-height-100 background-image d-flex justify-content-center d-none position-absolute" id="gameOverWin">
                 <button class="d-flex justify-content-center align-items-center" onclick="restartGame()">RESTART</button>
@@ -65,6 +60,23 @@
             <div class="help width-height-100 position-absolute border-radius-20 d-none" id="help"></div>          
             <div id="canvasContent" class="width-height-100 d-none">
                 <canvas class="width-height-100" id="canvas" width="720px" height="420px"></canvas>
+            </div>
+            <div class="miniBtns d-flex position-absolute">
+                <img id="audio" src="img/10_extras/ton-an.png" alt="" onclick="toggleMute()">
+                <img id="fullscreen" src="img/10_extras/vollbild.png" alt="" onclick="toggleFullscreen()">
+                <img id="settings" src="img/10_extras/deinstellungen.png" alt="" onclick="showHelpPage()">
+            </div>
+            
+            <div id="leftMobile-container" class="d-flex position-absolute d-none">
+                <img id="left_button" class="mobile-btns" src="img/10_extras/pfeiltaste.png" alt="">
+                <img id="right_button" class="mobile-btns" src="img/10_extras/pfeiltaste.png" alt="">
+            </div>
+            <div id="rightMobile-container" class="d-flex position-absolute d-none">
+                <img id="jump_button" class="mobile-btns" src="img/10_extras/pfeiltaste.png" alt="">
+                <img id="throw_button" class="mobile-btns" src="img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png" alt="">
+            </div>
+            <div class="rotateDevice justify-content-center align-items-center border-radius-20 position-absolute">
+                <span>Please rotate your device</span>
             </div>
                 
         </div>

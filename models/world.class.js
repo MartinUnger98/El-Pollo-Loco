@@ -37,6 +37,11 @@ class World {
         this.run();
     }
 
+
+    /**
+     * allows the character to get all information of the world
+     * 
+     */
     setWorld() {
         this.character.World = this;
         if (!isMuted) {
@@ -46,6 +51,11 @@ class World {
         }
     }
 
+
+    /**
+     * starts the interval for the game
+     * 
+     */
     run() {
         setInterval(() => {
             this.checkCollision();
@@ -54,6 +64,11 @@ class World {
         }, 200);
     }
 
+
+    /**
+     * checks if the background music is muted 
+     * 
+     */
     checkBackgroundMusic() {
         setInterval(() => {
             if (isMuted) {
@@ -66,6 +81,11 @@ class World {
     }
 
 
+
+    /**
+     * checks if the button D is pressed and if there are bottles to throw left and throws a bottle if both is true
+     * 
+     */
     checkThrowObjects() {
         if (this.keyboard.D && this.bottleCounter > 0) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 50)
@@ -78,6 +98,12 @@ class World {
         }
     }  
 
+
+    /**
+     * sets object is thrown to true to one bottle in the array
+     *  
+     * @param {array} array 
+     */
     bottleIsThrown(array) {
         for (let obj of array) {
             if (obj.isThrown === false && obj.collected === true) {
@@ -87,6 +113,11 @@ class World {
         }        
     }
 
+
+    /**
+     * checks all collisions in the game
+     * 
+     */
     checkCollision() {
         this.checkCollisionJumpOnEnemy();
         this.checkCollisionCharacterEnemy();
@@ -95,6 +126,12 @@ class World {
         this.checkCollisionCharacterBottle();
         this.checkCollisionCharacterFinalboss();
     }
+
+
+    /**
+     * checks if the character jumps on an enemy
+     * 
+     */
     checkCollisionJumpOnEnemy() {
         this.level.enemies.forEach(enemy => {
             if(this.character.isColliding(enemy) && this.character.isAboveGround()) {
@@ -107,6 +144,11 @@ class World {
         });
     }
 
+
+    /**
+     * checks collision between character and enemy
+     * 
+     */
     checkCollisionCharacterEnemy() {
         this.level.enemies.forEach(enemy => {
             if(this.character.isColliding(enemy) && !enemy.chickenIsDead) {
@@ -116,6 +158,11 @@ class World {
         });
     }
 
+
+    /**
+     * checks collisions of the bottles
+     * 
+     */
     checkCollisionThrowableObject() {
         this.throwableObjects.forEach((bottle, index) => {
             this.checkCollisionBottleFinalboss(bottle, index);
@@ -123,6 +170,13 @@ class World {
         });
     }
 
+
+    /**
+     * checks collision between bottle and final boss
+     * 
+     * @param {object} bottle 
+     * @param {number} index 
+     */
     checkCollisionBottleFinalboss(bottle, index) {
         if (this.level.finalboss.isColliding(bottle)) {
             this.level.finalboss.hitFinalBoss();
@@ -135,6 +189,13 @@ class World {
         };
     }
 
+
+    /**
+     * checks collision between bottle and ground
+     * 
+     * @param {object} bottle 
+     * @param {number} index 
+     */
     checkCollisionBottleGround(bottle, index) {
         if (!bottle.isAboveGround()) {
             bottle.isColliding = true;
@@ -145,6 +206,11 @@ class World {
         };
     }
 
+
+    /**
+     * checks collision between character and coin
+     * 
+     */
     checkCollisionCharacterCoin() {
         this.level.coins.forEach((coin, index)=> {
             if (this.character.isColliding(coin)) {
@@ -157,6 +223,11 @@ class World {
         });
     }
 
+
+    /**
+     * checks collision between character and bottle
+     * 
+     */
     checkCollisionCharacterBottle() {
         this.level.bottles.forEach((bottle, index) => {
             if (this.character.isColliding(bottle) && !bottle.isThrown && !bottle.collected) {
@@ -169,6 +240,11 @@ class World {
         });
     }
 
+
+    /**
+     * checks collison between character and final boss
+     * 
+     */
     checkCollisionCharacterFinalboss() {
         if (this.character.isColliding(this.level.finalboss)) {
             this.gameOver = true;
@@ -179,20 +255,26 @@ class World {
             this.level.finalboss.playSound(this.lose_sound);
         };
     }
-    
-    checkCollected(array) {
-        let count = 0;
-        for (let obj of array) {
-            if (obj.collected === true) {
-                count++;
-            }
-        }
-        return count;
-    }
-   
-    
+       
+    /**
+     * draws everything in the canvas
+     * 
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawWorld();
+        let self = this;
+        requestAnimationFrame(function(){
+            self.draw();
+        });
+    }
+
+
+    /**
+     * draws all objects of the world
+     * 
+     */
+    drawWorld() {
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
@@ -211,17 +293,26 @@ class World {
         this.addToMap(this.level.finalboss);
         this.addObjectsToMap(this.throwableObjects);
         this.ctx.translate(-this.camera_x, 0);
-        let self = this;
-        requestAnimationFrame(function(){
-            self.draw();
-        });
     }
+
+
+    /**
+     * adds the object of the array to the world
+     * 
+     * @param {array} objects 
+     */
     addObjectsToMap(objects) {
         objects.forEach(object =>{
             this.addToMap(object);
         })
     }
 
+
+    /**
+     * adds the object to the world
+     * 
+     * @param {object} mo 
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -232,6 +323,12 @@ class World {
         };
     }
 
+
+    /**
+     * flips the image of the object in the other direction
+     * 
+     * @param {object} mo 
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -239,6 +336,12 @@ class World {
         mo.x = mo.x * -1;
     }
 
+
+    /**
+     * flips the image back of the object 
+     * 
+     * @param {object} mo 
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();

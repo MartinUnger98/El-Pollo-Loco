@@ -19,13 +19,24 @@ class LifeStatusBar extends DrawableObject {
         this.width = 200;
         this.height = 45;
     }
+ 
 
+    /**
+     * sets the current percentage of the status-bar
+     * 
+     * @param {*} percentage 
+     */
     setPercentage(percentage) {
         this.percentage = percentage;
         let path = this.IMAGES[this.resolveImageIndex()];
         this.img = this.imageCache[path];
     }  
 
+
+    /**
+     * 
+     * @returns the number of the picture with the right percentage
+     */
     resolveImageIndex() {
         if(this.percentage == 100) {
             return 5;

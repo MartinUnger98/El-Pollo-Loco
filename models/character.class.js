@@ -82,6 +82,11 @@ class Character extends MoveableObject{
         this.animate();
     }
 
+
+    /**
+     * drains energy from the target
+     * 
+     */
     hit() {
         this.energy -= 5;    
         if (this.energy < 0) {
@@ -92,16 +97,31 @@ class Character extends MoveableObject{
         }
     }
 
+
+    /**
+     * 
+     * @returns if the last hit was 1 second ago or not
+     */
     isHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
         return timepassed < 1;
     }
 
+
+    /**
+     * 
+     * @returns if the energy is 0 
+     */
     isDead() {
-        return this.energy == 0;
+        return this.energy === 0;
     }
 
+
+    /**
+     * move the object right
+     * 
+     */
     moveRight() {
         if (this.x < world.level.level_end_x) {
             this.x += this.speed;
@@ -109,6 +129,11 @@ class Character extends MoveableObject{
         }
     }
 
+
+    /**
+     * move the object left
+     * 
+     */
     moveLeft(){
         if (this.x > 150) {
             this.x -= this.speed;
@@ -116,65 +141,158 @@ class Character extends MoveableObject{
         }
     }
 
+
+    /**
+     * let the object jump
+     * 
+     */
     jump() {
         this.speedY = 25;
-        
     }
 
+
+    /**
+     * checks if the character is moving
+     * 
+     */
+    characterMoving() {
+        world.walking_sound.pause();
+        this.characterMovingRight();
+        this.characterMovingLeft();
+        this.characterJump(); 
+        world.camera_x = -this.x + 120;
+    }
+
+
+    /**
+     * checks if the character is moving right
+     * 
+     */
+    characterMovingRight() {
+        if(world.keyboard.RIGHT && isLoading) {
+            this.moveRight();
+            this.playSound(world.walking_sound);
+        }
+    }
+
+
+    /**
+     * checks if the character is moving left
+     * 
+     */
+    characterMovingLeft() {
+        if(world.keyboard.LEFT && isLoading) {
+            this.moveLeft();
+            this.playSound(world.walking_sound);
+        }
+    }
+
+
+    /**
+     * checks if the character is jumping
+     * 
+     */
+    characterJump() {
+        if (world.keyboard.SPACE && !this.isAboveGround() && isLoading) {
+            this.jump();
+            this.playSound(world.jumping_sound);
+        }
+    }
+
+
+    /**
+     * animations of the character
+     * 
+     */
+    characterAnnimation() {
+        if (this.isDead()) {
+            this.characterAnnimationDead();            
+        }
+        else if (this.isHurt()) {
+            this.characterAnnimationHurt();
+        }
+        else if (this.isAboveGround()) {
+            this.characterAnnimationJump();
+        } else{
+            if(world.keyboard.RIGHT || world.keyboard.LEFT) {              
+                this.characterAnnimationWalk();
+            }
+            else {
+               this.characterAnnimationStand(); 
+            }         
+        }
+    }
+
+
+    /**
+     * animation at death
+     * 
+     */
+    characterAnnimationDead() {
+        this.playAnnimation(this.IMAGES_DEAD);
+        setTimeout(() => {
+            this.clearAllIntervals();
+            world.background_music.pause()
+            this.playSound(world.dead_sound);
+            gameOverLose();
+        }, 1500);
+    }
+
+
+    /**
+     * animation at hurt
+     * 
+     */
+    characterAnnimationHurt() {
+        this.playAnnimation(this.IMAGES_HURT);
+        this.standingTime = 0;
+    }
+
+
+    /**
+     * animation at jumping
+     * 
+     */
+    characterAnnimationJump() {
+        this.playAnnimation(this.IMAGES_JUMPING);
+        this.standingTime = 0;
+    }
+
+
+    /**
+     * animation at walking
+     * 
+     */
+    characterAnnimationWalk() {
+        this.playAnnimation(this.IMAGES_WALKING);
+        this.standingTime = 0;
+    }
+
+
+    /**
+     * animation at standing
+     * 
+     */
+    characterAnnimationStand() {
+        this.playAnnimation(this.IMAGES_STANDING);
+        this.standingTime += 150;
+        if (this.standingTime >=6000) {
+            this.playAnnimation(this.IMAGES_SLEEPING);
+        }
+    }
+
+
+    /**
+     * animates the character
+     * 
+     */
     animate() {
-
         setInterval(() =>{
-            world.walking_sound.pause();
-            if(world.keyboard.RIGHT && isLoading) {
-                this.moveRight();
-                this.playSound(world.walking_sound);
-            }
-            if(world.keyboard.LEFT && isLoading) {
-                this.moveLeft();
-                this.playSound(world.walking_sound);
-            }
-
-            if (world.keyboard.SPACE && !this.isAboveGround() && isLoading) {
-                this.jump();
-                this.playSound(world.jumping_sound);
-            }
-
-            world.camera_x = -this.x + 120;
+            this.characterMoving();
         }, 1000 / 60);
-
         setInterval(() =>{    
-            if (this.isDead()) {
-                this.playAnnimation(this.IMAGES_DEAD);
-                setTimeout(() => {
-                    this.clearAllIntervals();
-                    world.background_music.pause()
-                    this.playSound(world.dead_sound);
-                    gameOverLose();
-                }, 1500);
-                
-            }
-            else if (this.isHurt()) {
-                this.playAnnimation(this.IMAGES_HURT);
-                this.standingTime = 0; 
-            }
-            else if (this.isAboveGround()) {
-                this.playAnnimation(this.IMAGES_JUMPING);
-                this.standingTime = 0;
-            } else{
-                if(world.keyboard.RIGHT || world.keyboard.LEFT) {              
-                    this.playAnnimation(this.IMAGES_WALKING);
-                    this.standingTime = 0;
-                }
-                else {
-                    this.playAnnimation(this.IMAGES_STANDING);
-                    this.standingTime += 150;
-                    if (this.standingTime >=6000) {
-                        this.playAnnimation(this.IMAGES_SLEEPING);
-                    }
-                }         
-            }
+            this.characterAnnimation();
         }, 100);
-
         setInterval(() => {
             if (this.isHurt()) {
                 this.playSound(world.hurt_sound);
