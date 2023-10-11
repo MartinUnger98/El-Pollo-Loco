@@ -202,6 +202,6 @@ class FinalBoss extends MoveableObject {
             if (this.isHurtFinalBoss()) {
                 this.playSound(world.finalbossHurt_sound);
             }
-        }, 500);
+        }, 100);
     }
 }

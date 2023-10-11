@@ -166,6 +166,7 @@ button:hover {
 
 .closeImg:hover {
     scale: 1.2;
+    cursor: pointer;
 }
 
 .actionImg {
@@ -287,10 +288,4 @@ button:hover {
     #content {
         height: 100vh;
     }
-    .rotateDevice {
-        top: 0;
-        left: 0;
-        display: flex;
-        font-size: 64px;
-    }   
 }
