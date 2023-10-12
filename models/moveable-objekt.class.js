@@ -19,8 +19,11 @@ class MoveableObject extends DrawableObject {
         setInterval(() => { 
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
-                this.speedY -= this.acceleration;    
-            }            
+                this.speedY -= this.acceleration;  
+                if (this.y > 116) {
+                    this.y = 115.5;
+                }  
+            }                     
         }, 1000 / 25);
     }
 

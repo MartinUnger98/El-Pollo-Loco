@@ -169,12 +169,7 @@ button:hover {
     cursor: pointer;
 }
 
-.actionImg {
-    height: 150px;
-    width: 150px;
-}
-
-.spaceImg {
+.actionImg, .spaceImg {
     height: 150px;
     width: 150px;
 }
@@ -259,15 +254,7 @@ button:hover {
     display: none;
 }
 
-@media (max-width: 720px) {
-    .rotateDevice {
-        top: 0;
-        left: 0;
-        display: flex;
-    }   
-}
-
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 1024px) {
     #leftMobile-container, 
     #rightMobile-container {
         display: flex;
@@ -276,8 +263,17 @@ button:hover {
 
 @media only screen and (max-width: 720px) {
     #content {
-        width: 90vw;
+        width: 100vw;
     }
+}
+
+@media only screen and (max-width: 650px) {
+    
+    .rotateDevice {
+        top: 0;
+        left: 0;
+        display: flex;
+    }   
 }
 
 @media only screen and (max-height: 530px) {
